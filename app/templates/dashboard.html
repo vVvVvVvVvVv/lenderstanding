@@ -1,0 +1,21 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+  <div id="wrap">
+    <h2> Enter a username:</h2>
+    <input id="product" type="text"></input>
+    <button id="fetch_product_button" type="button">Go!</button>
+
+    <div id="graph_container"/>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "include/footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="{{ url_for('static', filename='js/product_search.js') }}"></script>
+{% endblock %}
+

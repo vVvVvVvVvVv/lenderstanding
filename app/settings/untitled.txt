@@ -1,0 +1,71 @@
+@app.route('/product/json/<product_id>')
+def product_details(product_id):
+	query = "Select RTime, RScore From all_hk Where PID = \" " + product_id +'" ORDER BY RTime ASC;'
+	data = query_db(query)
+	data = running_average(data)
+	formatted_data = map(lambda d: {'time': d[0], 'rating':d[1]}, data)
+	return jsonify(reviews = formatted_data)	
+
+@app.route('/home')
+def home():
+    # Unworldly button
+    
+    
+    
+    # Create database connection
+    con = con_db(host, port, user, passwd, db)
+
+    # Add custom filter to jinja2 env
+    jinja2.filters.FILTERS['format_currency'] = format_currency
+
+    var_dict = {
+        "country": request.args.get("country"),
+        "edu_index": request.args.get("edu_index", '0'),
+        "median_age": request.args.get("median_age", '0'),
+        "gdp": request.args.get("gdp", '0'),
+        "order_by": request.args.get("order_by", "edu_index"),
+        "sort": request.args.get("sort", "DESC")
+    }
+
+    # Query the database
+    data = query_db(con, var_dict)
+
+    # Add data to dictionary
+    var_dict["data"] = data
+
+    #return render_template('table.html', settings=var_dict)
+    return render_template('unworldly.html', settings=var_dict)
+    #return render_template('bubblechart.html', settings=var_dict)
+
+
+    # Renders home.html.
+#    return render_template('home.html')
+
+# ROUTING/VIEW FUNCTIONS
+@app.route('/', methods=['GET'])
+def index():
+    # Create database connection
+    con = con_db(host, port, user, passwd, db)
+
+    # Add custom filter to jinja2 env
+    jinja2.filters.FILTERS['format_currency'] = format_currency
+
+    var_dict = {
+        "country": request.args.get("country"),
+        "edu_index": request.args.get("edu_index", '0'),
+        "median_age": request.args.get("median_age", '0'),
+        "gdp": request.args.get("gdp", '0'),
+        "order_by": request.args.get("order_by", "edu_index"),
+        "sort": request.args.get("sort", "DESC")
+    }
+
+    # Query the database
+    data = query_db(con, var_dict)
+
+    # Add data to dictionary
+    var_dict["data"] = data
+
+    #return render_template('table.html', settings=var_dict)
+    return render_template('world.html', settings=var_dict)
+    #return render_template('bubblechart.html', settings=var_dict)
+

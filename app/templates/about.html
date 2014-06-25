@@ -1,0 +1,280 @@
+{% extends "layout/base_slides.html" %}
+
+{% block head %}
+  <link href="{{ url_for('static', filename='vendor/components-revealjs/css/theme/default.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="reveal">
+<div class="slides">
+    <section class="stack" data-id="fe3c9842a66fe1ac546e7eb7f397d5bb">
+        <section class="" data-id="53b99593a661c24ec76755d67e6c10a3" data-background-color="rgba( 22, 152, 213, 0.6 )">
+            <h1>
+                <br>
+            </h1>
+<h1>
+            <br>
+        </h1>
+<h1>
+        <br>
+        </h1>
+<h1>lenderstanding</h1>
+<div style="text-align: left; ">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<font color="#ff9900">Helping lenders help</font>&nbsp;</div>
+<div style="text-align: left; ">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<font color="#ff9900">Credit risk model for Zidisha</font>&nbsp; &nbsp; &nbsp; Vanessa Heckman</div>
+    </section>
+    <section class="" data-id="8f063c039b6eecac54205d5107ffdb1e" data-background-color="rgba( 22, 152, 213, 0.6 )">
+        <h2>backend</h2>
+<div style="text-align: left; position: absolute; width: 937px; height: 1057px; z-index: 5; left: 15px; top: 98px;" class="absolute-element">
+<ul>
+<li>Loan data from Zidisha (3.5 GB total)</li>
+<ul>
+<li>8000 loans (3500 complete)</li>
+<li>23,000 lenders and borrowers</li>
+<li>2009 to present</li>
+</ul>
+</ul>
+<br>
+        <div>
+<ul>
+<li>Clean data, exploratory analysis</li>
+<li>Select features</li>
+<li>
+<span>Linear regression model</span>
+        <br>
+</li>
+<ul style="margin-left: 1em; font-size: 36.17363357543945px; font-style: normal; font-variant: normal; display: inline-block; list-style-type: disc;">
+<li>
+<span>80%/20% Test/train split</span>
+        <br>
+</li>
+<li>
+<span>Final training: 100% data</span>
+        <br>
+</li>
+<li>
+<span>Performance (test set)</span>
+        <br>
+</li>
+<ul style="list-style-type: square;">
+<li>
+<span>81% Accuracy</span>
+        <br>
+</li>
+<li>
+<span>Area under ROC: 0.73</span>
+</li>
+</ul>
+</ul>
+</ul>
+</div>
+</div>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485681/scikit_logo.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 330.8767415498486px; height: 330.8767415498486px; z-index: 4; left: 571px; top: 167px;">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485665/zidisha_logo.png" style="width: 301.36675330421343px; height: 72.18542322187434px; max-height: none; max-width: none; position: absolute; z-index: 7; left: 585px; top: 414px;" class="absolute-element">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485684/python-logo-master-v3-TM.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 327.24330103537915px; height: 107.25002815972965px; z-index: 4; left: 574px; top: 511px;">
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485686/logo-mysql-170x115.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 176px; height: 121px; z-index: 4; left: 724px; top: 35px;">
+    </section>
+    <section class="" data-id="abc9ca65d118677b6ff041d09c4099b1" data-background-color="rgba( 22, 152, 213, 0.6 )">
+        <h2>Performance</h2>
+<div>
+        <br>
+        </div>
+<div>ROC Curve</div>
+    </section>
+    <section class="" data-id="75e8c6fed0b2a2793964be99529abf42" data-background-color="rgba( 22, 152, 213, 0.6 )">
+        <h2>Analytics</h2>
+<div style="text-align: left; ">Key factors:</div>
+<div style="text-align: left; ">Number of previous loans</div>
+<div style="text-align: left; ">Period of loan</div>
+<div style="text-align: left; ">Sift science score</div>
+<div style="text-align: left; position: absolute; width: 614px; height: 342px; z-index: 4; left: 364px; top: 89px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488250/default_rate_loan_applic.png">
+        <br>
+</div>
+<div style="text-align: left; ">
+        <br>
+    </div>
+<div style="text-align: left; ">
+    <br>
+</div>
+<div style="text-align: left; ">
+<br>
+</div>
+<div style="text-align: left; position: absolute; width: 614px; height: 342px; z-index: 4; left: 371px; top: 388px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488249/default_rate_loan_applic.png">
+<br>
+</div>
+</section>
+<section class="" data-id="7cf11c60e24c24c7632dda3f9bea3964" data-background-color="rgba( 22, 152, 213, 0.6 )">&nbsp;<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488266/APSS_pic.png" style="width: 363px; height: 482px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 574px; top: 195px;" class="absolute-element">
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488270/osaka_droid_1.jpg" style="width: 230px; height: 406px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 187px; top: 29px;" class="absolute-element">
+    <h2 class="absolute-element" style="position: absolute; width: 638px; height: 270px; z-index: 4; left: -32px; top: 444px;">&nbsp;<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488261/thesis_fig6.png" style="width: 582.8395330790471px; height: 229.85245901378778px; max-height: none; max-width: none;">
+</h2>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488265/thesis_fig5.png" style="width: 511px; height: 164px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 425px; top: 27px;" class="absolute-element">
+<div class="absolute-element" style="position: absolute; width: 166.63934426229508px; height: 311px; z-index: 4; left: -17px; top: -56px; max-height: none; max-width: none;">
+<br>
+    <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488254/207-primarylogo200.gif">
+</div>
+</section>
+</section>
+<section class="" data-id="d0009b054113fe6fc3de5a298e223f22" data-background-color="rgba( 22, 152, 213, 0.6 )">
+    <h2 style="text-align: right;">meet <font color="#ff9900">Kevinson</font>
+</h2>
+</section>
+<section class="" data-id="f9dfeec25c793e61703374805eed082a" data-background-color="rgba( 22, 152, 213, 0.6 )">
+    <h2 style="text-align: right; ">
+        <br>
+    </h2>
+<h2 style="text-align: right; ">
+<div style="font-size: 35.519126892089844px; font-style: normal; font-variant: normal;">
+    <font style="font-size: 42px;">
+        <br class="Apple-interchange-newline">sharing the&nbsp;</font>
+        </div>
+<div style="font-size: 35.519126892089844px; font-style: normal; font-variant: normal;">
+<span style="font-size: 42px;">entrepreneurial</span>
+        <br>
+</div>
+<div style="font-size: 35.519126892089844px; font-style: normal; font-variant: normal;">
+        <font style="font-size: 42px;">experience...</font>
+    </div>
+</h2>
+<div>
+    <span style="font-size: 54px;">
+        <br>
+    </span>
+</div>
+<div>
+<span style="font-size: 54px;">thee</span>
+</div>
+<h2 style="text-align: right; ">
+<span style="color: rgb(255, 153, 0); font-size: 64.566px;">
+    <br>
+</span>
+</h2>
+<h2 style="text-align: right; ">
+<br>
+</h2>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485550/kevinson2.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 689.9228294383803px; height: 837.6281918529702px; z-index: 4; left: -22px; top: -155px;">
+</section>
+<section class="" data-id="76a99522cc147bd21da49acef227c5b9" data-background-color="rgba( 22, 152, 213, 0.6 )">
+    <h2>
+        <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485495/homepage.jpg">
+    </h2>
+</section>
+<section class="" data-id="4d4c361b3a712a4d235e70c588917672" data-background-color="rgba( 22, 152, 213, 0.6 )">
+    <h2>
+        <br>
+    </h2>
+<div>
+    <br>
+</div>
+<div>
+<br>
+</div>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485550/kevinson2.png" class="absolute-element" style="font-size: 35.519126892089844px; font-style: normal; font-variant: normal; max-width: none; max-height: none; position: absolute; width: 689.9228294383803px; height: 837.6281918529702px; z-index: 4; left: -22px; top: -155px;">
+<div style="text-align: right; ">
+    <br>
+</div>
+<div style="text-align: right; ">
+<br>
+</div>
+<div style="text-align: right; ">
+<br>
+</div>
+<div style="text-align: right; ">
+<br>
+</div>
+<div style="text-align: right; ">
+<br>
+</div>
+<div style="text-align: right; ">
+<font style="font-size: 42px;">...shaping&nbsp;</font>
+</div>
+<div style="text-align: right; ">
+<font style="font-size: 42px;">the lending&nbsp;</font>
+</div>
+<div style="text-align: right; ">
+<font style="font-size: 42px;">experience</font>
+</div>
+</section>
+<section class="" data-id="4c59d9921ac8da4ba7519bfdb00524b9" data-background-color="rgba( 22, 152, 213, 0.6 )">&nbsp;<h2 class="absolute-element" style="position: absolute; width: 237px; height: 305px; z-index: 4; left: 187px; top: -5px;">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488202/berthe.jpg" style="width: 197.41097377138985px; height: 264.97267759302275px; max-height: none; max-width: none;">
+<br>
+</h2>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488196/borrower2.jpeg" style="width: 227px; height: 150px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 54px; top: 448px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488195/borrower4.jpeg" style="width: 214px; height: 158px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 373px; top: 449px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488198/borrower3.jpeg" style="width: 109px; height: 157px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 743px; top: 448px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488201/elizabeth.jpg" style="width: 190px; height: 255px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 573px; top: 1px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/488204/zidisha_logo.png" style="width: 566px; height: 141px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 199px; top: 278px;" class="absolute-element">
+</section>
+<section class="" data-id="b2b5709770ef8d02357c12a1be04a1a4" data-background-color="rgba( 22, 152, 213, 0.6 )">
+    <h2>lenderstanding</h2>
+<div>
+    <br>
+</div>
+<div style="text-align: left; ">
+<span>
+<font color="#ff9900">Problem: Prevent default</font>
+</span>
+<br>
+</div>
+<div style="text-align: left; ">
+<span>Currently: rich dataset, manual approval,&nbsp;</span>
+<br>
+</div>
+<div style="text-align: left; ">Want: data-driven recommendation</div>
+<div style="text-align: left; ">How can Zidisha screen loan applications so that only responsible borrowers are approved?</div>
+<div style="text-align: left; ">
+<span style="font-size: 35.46099090576172px; font-style: normal; font-variant: normal;">Use machine-learning methods to generate a data-driven recommendation to approve or reject a loan application</span>
+<br>
+</div>
+<div style="text-align: left; ">
+<span style="font-size: 35.46099090576172px; font-style: normal; font-variant: normal;">
+    <br>
+</span>
+</div>
+<div style="text-align: left; ">
+<font color="#ff9900">Solution: Credit risk model</font>
+</div>
+<div style="text-align: left; ">Tool for Zidisha to improve loan approval process</div>
+</section>
+<section class="" data-id="c19696cc126450b91284861236e9f50a" data-background-color="rgba( 22, 152, 213, 0.6 )">
+    <h2>explore</h2>
+<div style="text-align: left; ">Most important features:</div>
+<div style="text-align: left; ">
+    <ul>
+<li>Number of previous loans (0.21)</li>
+<li>Period of loan (0.17)</li>
+<li>Sift science score (0.16)</li>
+</ul>
+</div>
+<div>
+<br>
+</div>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/486084/default_rate_loan_applic.png" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 575px; height: 301px; z-index: 4; left: 318px; top: 322px;">
+</section>
+<section class="" data-id="9ec6d3fdf7747791472903edbce9c222" data-background-color="rgba( 22, 152, 213, 0.6 )">&nbsp;<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485613/207-primarylogo200.gif" style="width: 133px; height: 133px; max-height: none; max-width: none; position: absolute; z-index: 4; left: -2px; top: -8px;" class="absolute-element">
+    <h2 class="absolute-element" style="position: absolute; width: 408px; height: 64px; z-index: 4; left: 152px; top: 13px;">
+        <font style="font-size: 32px;">California Institute of Technology</font>
+    </h2>
+<div class="absolute-element" style="position: absolute; width: 482px; height: 46px; z-index: 4; left: 155px; top: 71px;">
+    <font style="font-size: 24px;">Department of Mechanical and Civil Engineering</font>
+</div>
+<div class="absolute-element" style="position: absolute; width: 360px; height: 492.7952840300107px; z-index: 4; left: 605px; top: 248px; max-height: none; max-width: none;">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485604/APSS_pic.png" style="width: 300.98070725188506px; height: 422.521726335363px; max-height: none; max-width: none;">
+<br>
+</div>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485619/thesis_fig5.png" style="width: 486.6098605209097px; height: 119.04587049322352px; max-height: none; max-width: none; position: absolute; z-index: 4; left: 357px; top: 114px;" class="absolute-element">
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485623/thesis_fig6.png" style="width: 606.566640215172px; height: 221.46730960987006px; max-height: none; max-width: none; position: absolute; z-index: 4; left: -2px; top: 448px;" class="absolute-element">
+<br>
+<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vmheckman/images/485649/osaka_droid_1.jpg" class="absolute-element" style="position: absolute; max-height: none; max-width: none; width: 176.3624132237508px; height: 325.6527329753577px; z-index: 4; left: 165px; top: 114px;">
+</section>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- Presentation Libraries -->
+  <script src="{{ url_for('static', filename='vendor/components-revealjs/lib/js/head.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/components-revealjs/js/reveal.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/reveal.js') }}"></script>
+{% endblock %}
