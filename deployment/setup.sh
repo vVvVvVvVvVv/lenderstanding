@@ -93,7 +93,7 @@ setup_nginx () {
       server_name "";
 
       location / {
-        proxy_pass http://127.0.0.1:8000;
+        proxy_pass http://127.0.0.1:5000;
       }
     }'
 
@@ -111,7 +111,7 @@ start_app () {
 
     # Runs the app within a screen detached mode
     cd $project_dir
-    screen -d -m gunicorn app:app
+screen -d -m gunicorn app:app -w 4 -b 0.0.0.0:80
 
     # Restarts nginx
     #sudo service nginx restart
