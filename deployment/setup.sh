@@ -114,7 +114,10 @@ start_app () {
     screen -d -m gunicorn app:app
 
     # Restarts nginx
-    sudo service nginx restart
+    #sudo service nginx restart
+
+    # Start supervisord instead
+    sudo supervisord -c simple.conf
 
     return
 }
@@ -134,10 +137,10 @@ main () {
         echo $'\e[31m'"Please enter a github username"$'\e[0m'
         main
     else
-        read -p $'\e[32m'"Enter the github repository name [insightfl] > "$'\e[0m' project
+        read -p $'\e[32m'"Enter the github repository name [lenderstanding] > "$'\e[0m' project
 
         # Default project name is 'insightfl'
-        project=${project:="insightfl"}
+        project=${project:="lenderstanding"}
         project_dir=$HOME/$project
         status=$(curl -s -I "https://github.com/$username/$project" | head -n 1 | cut -d$' ' -f2)
 
@@ -177,13 +180,12 @@ main () {
             clone_project $username $project
             install_project_dependencies $project_dir
             set_env_var $project_dir
-            setup_nginx $project_dir
+            # setup_nginx $project_dir
             start_app $project_dir
 
             cd $HOME
         fi
     fi
-
     return
 }
 
