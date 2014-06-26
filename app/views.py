@@ -28,17 +28,28 @@ from app.helpers.filters import format_currency
 import jinja2
 
 def hello():
-    print 'Hello world!'
+    return 'Hello world!'
 
 #Change sql to 0.0.0.0
 def sqlExec(query):
     #db = MySQLdb.connect(user=DATABASE_USER, host=DATABASE_HOST, port=DATABASE_PORT, db='semfundc_zidisha')
+    print user, host
     con = MySQLdb.connect(user=user, host=host, port=port, db=db)
     with con:
         cur = con.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(query)
         tables = cur.fetchall()
         return tables
+
+
+@app.route("/index.html")
+def indexfn():
+    ifexists = 0
+    while ifexists ==0:
+        rand_loanid = random.randint(0,5000)
+        cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
+        ifexists = int(cnt[0]['total'])    
+    return render_template('index.html', rand_loanid=rand_loanid)
 
 @app.route("/")
 def hello():
@@ -50,14 +61,6 @@ def hello():
         
     return render_template('index.html',rand_loanid=rand_loanid)
 
-@app.route("/index.html")
-def indexfn():
-    ifexists = 0
-    while ifexists ==0:
-        rand_loanid = random.randint(0,5000)
-        cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
-        ifexists = int(cnt[0]['total'])    
-    return render_template('index.html', rand_loanid=rand_loanid)
 
 @app.route("/about.html")
 def aboutfn():
@@ -69,8 +72,9 @@ def appfn():
 
 @app.route("/search.html")
 def search():
-    mydb = MySQLdb.connect(host="localhost", user="root", db = "semfundc_zidisha")
-    cursor = mydb.cursor()
+    #mydb = MySQLdb.connect(host="localhost", user="root", db = "semfundc_zidisha")
+    con = MySQLdb.connect(user=user, host=host, port=port, db=db)
+    cursor = con.cursor()
 
     loan_id = int(request.args.get("loan_id",None))
 
