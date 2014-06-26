@@ -32,9 +32,10 @@ def hello():
 
 #Change sql to 0.0.0.0
 def sqlExec(query):
-    db = MySQLdb.connect(user=DATABASE_USER, host=DATABASE_HOST, port=DATABASE_PORT, db='semfundc_zidisha')
-    with db:
-        cur = db.cursor(MySQLdb.cursors.DictCursor)
+    #db = MySQLdb.connect(user=DATABASE_USER, host=DATABASE_HOST, port=DATABASE_PORT, db='semfundc_zidisha')
+    con = MySQLdb.connect(user=user, host=host, port=port, db=db)
+    with con:
+        cur = con.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(query)
         tables = cur.fetchall()
         return tables
