@@ -27,6 +27,9 @@ from app.helpers.database import con_db, query_db
 from app.helpers.filters import format_currency
 import jinja2
 
+def hello():
+    print 'Hello world!'
+
 #Change sql to 0.0.0.0
 def sqlExec(query):
     db = MySQLdb.connect(user=DATABASE_USER, host=DATABASE_HOST, port=DATABASE_PORT, db='semfundc_zidisha')
