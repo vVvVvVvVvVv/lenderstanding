@@ -17,23 +17,7 @@
     <!-- Custom styles for this template -->
     <link href="static/css/main.css" rel="stylesheet">
     <!-- // <script type="text/javascript" src='static/jquery/jquery-2.0.3.min.js'></script> -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript">
-            $(document).ready(function(){
-                              
-                              //Check if the current URL contains '#'
-                              if(document.URL.indexOf("#")==-1)
-                              {
-                              // Set the URL to whatever it was plus "#".
-                              url = document.URL+"#";
-                              location = "#";
-                              
-                              //Reload the page
-                              location.reload(true);
-                              
-                              }
-                        	  });
-    </script> 
+    
 
 
 
@@ -145,6 +129,22 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- // <script src="{{ url_for('static', filename='vendor/jquery/dist/jquery.min.js') }}"></script> -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                              
+                              //Check if the current URL contains '#'
+                              if(document.URL.indexOf("#")==-1)
+                              {
+                              // Set the URL to whatever it was plus "#".
+                              url = document.URL+"#";
+                              location = "#";
+                              
+                              //Reload the page
+                              location.reload(true);
+                              }
+                        	  });
+    </script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 

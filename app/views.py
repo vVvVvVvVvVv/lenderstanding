@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from functools import wraps
+from flask import Flask, render_template, request, jsonify, Response
 from app import app, host, port, user, passwd, db
 from app.helpers.database import con_db
 import pymysql as MySQLdb
@@ -27,13 +28,31 @@ from app.helpers.database import con_db, query_db
 from app.helpers.filters import format_currency
 import jinja2
 
-def hello():
-    return 'Hello world!'
+def check_auth(username, password):
+    """This function is called to check if a username /
+    password combination is valid.
+    """
+    return username == 'guest' and password == 'insight123'
+
+def authenticate():
+    """Sends a 401 response that enables basic auth"""
+    return Response(
+    'Could not verify your access level for that URL.\n'
+    'You have to login with proper credentials', 401,
+    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
 
 #Change sql to 0.0.0.0
 def sqlExec(query):
     #db = MySQLdb.connect(user=DATABASE_USER, host=DATABASE_HOST, port=DATABASE_PORT, db='semfundc_zidisha')
-    print user, host
     con = MySQLdb.connect(user=user, host=host, port=port, db=db)
     with con:
         cur = con.cursor(MySQLdb.cursors.DictCursor)
@@ -42,24 +61,24 @@ def sqlExec(query):
         return tables
 
 
-@app.route("/index.html")
-def indexfn():
-    ifexists = 0
-    while ifexists ==0:
-        rand_loanid = random.randint(0,5000)
-        cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
-        ifexists = int(cnt[0]['total'])    
-    return render_template('index.html', rand_loanid=rand_loanid)
+#@app.route("/index.html")
+#def indexfn():
+#    ifexists = 0
+#    while ifexists ==0:
+#        rand_loanid = random.randint(0,5000)
+#        cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
+#        ifexists = int(cnt[0]['total'])    
+#    return render_template('index.html', rand_loanid=rand_loanid)
 
 @app.route("/")
+@requires_auth
 def hello():
-    ifexists = 0
-    while ifexists ==0:
-        rand_loanid = random.randint(0, 5000)
-        cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
-        ifexists = int(cnt[0]['total'])
-        
-    return render_template('index.html',rand_loanid=rand_loanid)
+    return render_template('index.html')
+#ifexists = 0
+#while ifexists ==0:
+#    rand_loanid = random.randint(0, 5000)
+#    cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
+#    ifexists = int(cnt[0]['total'])
 
 
 @app.route("/about.html")
@@ -71,6 +90,7 @@ def appfn():
     return render_template('app.html')
 
 @app.route("/search.html")
+@requires_auth
 def search():
     #mydb = MySQLdb.connect(host="localhost", user="root", db = "semfundc_zidisha")
     con = MySQLdb.connect(user=user, host=host, port=port, db=db)
