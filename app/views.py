@@ -92,8 +92,14 @@ def appfn():
 @app.route("/search.html")
 @requires_auth
 def search():
+    user = app.config["DATABASE_USER"]
+    host = app.config["DATABASE_HOST"]
+    port = app.config["DATABASE_PORT"]
+    pw   = app.config["DATABASE_PASSWORD"]
+    db   = app.config["DATABASE_DB"]
+    
     #mydb = MySQLdb.connect(host="localhost", user="root", db = "semfundc_zidisha")
-    con = MySQLdb.connect(user=user, host=host, port=port, db=db)
+    con = MySQLdb.connect(user=user, host=host, port=port, pw = pw, db=db)
     cursor = con.cursor()
 
     loan_id = int(request.args.get("loan_id",None))
