@@ -5,52 +5,55 @@
     <div class="container">
       <div class="container-fluid">
 	<div class="container w">
-        <h4>Loan Application ID: {{loan_id}}</h4><br>
+        <!--<h4>Loan Application ID: {{loan_id}}</h4><br>-->
             <div class="row">
                 <div class="col-md-4">
+                    <b>Name:</b> {{loan_info[0]['first']}}<br>
+                    <b>City:</b> {{loan_info[0]['city']}}<br>
+					<b>Country:</b> {{loan_info[0]['country']}}<br>
+                    <b>Sift Science Score:</b> {{loan_info[0]['sift_score']}}<br> <br>
+					
                     <img src= {{image_id_str}} width = 100%>
 					<!--src="{{url_for('static', filename='test.jpg')}}"!-->
+					
                 </div>
                 <div class="col-md-4">
 
-	                    <h4>Loan Prediction:
-	                    {% if ypred == "Default" %}
-	                    <h4><font color="red"> {{ypred}} </font>
-	                    <i class="fa fa-check"> </i></h4>
-	                    {% else %}
-	                    <h4><font color="green">{{ypred}} </font></h4>
-						{% endif %}
-
-	                    <h4><br>Probability of Default:
-	                    {% if ypred == "Default" %}
-	                    <h4><font color="red"> {{prob_fund}} </font>
-	                    <i class="fa fa-check"> </i></h4>
-	                    {% else %}
-	                    <h4><font color="green"> {{prob_fund | round(2)}} </font></h4>
-						{% endif %}
-
+                    <b>Loan Application ID:</b> {{loan_id}}<br><br>
+                    <b>Loan Amount (local currency):</b> {{loan_info[0]['amount']}}<br>     
+                    <b>Interest:</b> {{loan_info[0]['interest']}}%<br>
+                    <b>Period:</b> {{loan_info[0]['period']}} months<br><br>
+                    <b>Referred by:</b> {{loan_info[0]['reffered_by']}}<br>
+                    <b>Loan use:</b> {{loan_info[0]['loanuse']}}<br><br>
 	                    
-	                    <!-- centered row -->
+	                <!-- centered row -->
 
-	                    <div>
-						</div> 	
+	                <div>
+					</div> 	
                 </div>
 				
-    interest   = loan_info[0]['interest']
-    period     = str(loan_info[0]['interest'])
-    time_to_complete = loan_info[0]['time_to_complete']
-
-					<div>
-                    <br><b>Loan ID: {{loan_id}}</b><br>
-                    <b>Name: {{loan_info[0]['name']}}</b><br>
-                    <b>Interest: {{posted_date_months}}</b><br>
-                    <b>Location: {{loan_info[0]['location_country']}}</b><br>
-                    <b>Sift Science Score: {{loan_info[0]['sift_score']}}</b><br>
-                    <b>Loan Amount (local currency): ${{loan_info[0]['loan_amount']}}</b><br>     
-                    <b>Repayment Term: {{loan_info[0]['terms_repayment_term']}} months</b><br>
+				<div>
 						
-					</div>
+				</div>
                 <div class="col-md-4">
+
+	                    <h4>Probability of Default:
+	                    {% if ypred == "Default" %}
+	                    <font color="red"> {{prob_fund}} </font>
+	                    <i class="fa fa-check"> </i></h4>
+	                    {% else %}
+	                    <font color="green"> {{prob_fund | round(2)}} </font></h4>
+						{% endif %}
+						
+	                    <h4>Loan Prediction:
+	                    {% if ypred == "Default" %}
+	                    <font color="red"> {{ypred}} </font>
+	                    <i class="fa fa-check"> </i></h4>
+	                    {% else %}
+	                    <font color="green">{{ypred}} </font></h4>
+						{% endif %}
+						
+	                    <br><b>Loan History:</b> {{loan_hist['n_prev']}} <br>
 				
                 </div>
 

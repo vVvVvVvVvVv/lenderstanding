@@ -53,6 +53,12 @@ def sqlExec(query):
         tables = cur.fetchall()
         return tables
 
+def remove_uni(s):
+    """remove the leading unicode designator from a string"""
+    if isinstance(s, unicode):
+        s = s.encode("ascii", "ignore")
+    return s
+
 @app.route("/")
 @requires_auth
 def hello():
@@ -82,7 +88,7 @@ def search():
     
     # Need to change this on AWS:
     #con = MySQLdb.connect(user=user, host=host, port=port, pw = pw, db=db)
-    con = MySQLdb.connect(user=user, host=host, port=port, db=db)
+    con = MySQLdb.connect(user=user, host=host, port=port, db=db, charset='utf8')
     cursor = con.cursor()
 
     # Loan ID
@@ -90,7 +96,12 @@ def search():
     pickle.dump( loan_id, open( "passloan.pkl", "wb"))
     
     # Load loan info
-    loan_info = sqlExec("select sift_score, interest, period, applydate-borrowers.Created as time_to_complete from loanapplic join borrowers on loanapplic.borrowerid = borrowers.userid where loanid = %d;" % loan_id)
+    loan_info = sqlExec("SELECT borrowerid, sift_score, interest, period, applydate-borrowers.Created as time_to_complete, firstname as first, reffered_by, Country as country, City as city, Amount as amount, loanuse from loanapplic join borrowers on loanapplic.borrowerid = borrowers.userid where loanid = %d;" % loan_id)
+    loan_info[0]['loanuse'] = remove_uni(loan_info[0]['loanuse'])
+
+    # Load borrower history
+    #loan_hist = sqlExec("SELECT loanid, Amount as amount FROM loanapplic WHERE borrowerid = %d AND loanid < %d;" % ( loan_info[0]['borrowerid'], loan_id))
+    loan_hist = sqlExec("SELECT count(loanid) as n_prev FROM loanapplic WHERE borrowerid = %d AND loanid < %d;" % (loan_info[0]['borrowerid'], loan_id))
     
     # Sift score
     sift_score = loan_info[0]['sift_score']
@@ -114,14 +125,17 @@ def search():
 
     # Set image id file
     image_id_str = "static/images/loan_images/" + str(loan_id) + ".jpg"
-    return render_template('search.html',loan_id=loan_id, loan_info=loan_info, ypred=ypred, prob_fund=prob_fund, image_id_str =image_id_str)
+    return render_template('search.html',loan_id=loan_id, loan_info=loan_info, ypred=ypred, prob_fund=prob_fund, image_id_str =image_id_str, loan_hist = loan_hist)
 
 @app.route("/eval.html")
 def eval():
     #loan_id = pickle.load( open( "passloan.pkl", "rb" ))
     loan_id = 130
     
-    loan_info=sqlExec("SELECT  name, borrowers_gender, location_country,location_country_code, sector, loan_amount, description_num_languages, posted_date, terms_repayment_term, image_id from Loans where loan_id = %d;" % loan_id)
+    loan_info=sqlExec("SELECT  borrowers_gender, location_country,location_country_code, sector, loan_amount, description_num_languages, posted_date, terms_repayment_term, image_id from Loans where loan_id = %d;" % loan_id)
+
+    loan_info=sqlExec("SELECT  COUNT(loanid), borrowers_gender, location_country,location_country_code, sector, loan_amount, description_num_languages, posted_date, terms_repayment_term, image_id from Loans where loan_id = %d;" % loan_id)
+
     
     posted_date_months=loan_info[0]['posted_date'].month
 
@@ -166,7 +180,6 @@ def eval():
             xin = np.append(continent_vec,sector_vec)
             xin = np.append(xin,np.array( [borrowers_gender,loan_info[0]['description_num_languages'],amount,posted_date_months,month ] ))
 
-
             predprob = round(clf.predict_proba(xin)[0][0],2)
             predMatrix.append((amount, month, predprob) )
     
@@ -183,7 +196,6 @@ def eval():
     month_pred_str = str(month_pred)
 
     return render_template('eval.html',loan_info=loan_info,loan_id=loan_id,roundedReqAmt=roundedReqAmt,requested_repayment_term=requested_repayment_term,gridAmtSet=gridAmtSet,amount_pred_str=amount_pred_str,month_pred_str=month_pred_str,binreqLoanAmount=binreqLoanAmount)
-
 
 @app.route("/blocker")
 def block():
