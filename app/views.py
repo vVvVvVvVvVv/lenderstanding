@@ -17,12 +17,6 @@ import random
 # ROUTING/VIEW FUNCTIONS
 #'''
 #@app.route('/')
-#@app.route('/index')
-#def index():
-#    # name = 'Vanessa Heckman'
-#    # return 'Hello, World {0}'.format(name)
-#    # Renders index.html.
-#    return render_template('index.html')
 #'''
 from app.helpers.database import con_db, query_db
 from app.helpers.filters import format_currency
@@ -52,23 +46,12 @@ def requires_auth(f):
 
 #Change sql to 0.0.0.0
 def sqlExec(query):
-    #db = MySQLdb.connect(user=DATABASE_USER, host=DATABASE_HOST, port=DATABASE_PORT, db='semfundc_zidisha')
     con = MySQLdb.connect(user=user, host=host, port=port, db=db)
     with con:
         cur = con.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(query)
         tables = cur.fetchall()
         return tables
-
-
-#@app.route("/index.html")
-#def indexfn():
-#    ifexists = 0
-#    while ifexists ==0:
-#        rand_loanid = random.randint(0,5000)
-#        cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
-#        ifexists = int(cnt[0]['total'])    
-#    return render_template('index.html', rand_loanid=rand_loanid)
 
 @app.route("/")
 @requires_auth
@@ -80,14 +63,13 @@ def hello():
 #    cnt=sqlExec("SELECT COUNT(1) AS total FROM loanapplic WHERE loanid = %d;" % rand_loanid)
 #    ifexists = int(cnt[0]['total'])
 
+@app.route('/index.html')
+def index():
+    return render_template('index.html')#    # name = 'Vanessa Heckman'
 
 @app.route("/about.html")
 def aboutfn():
     return render_template('about.html')
-
-@app.route("/app")
-def appfn():
-    return render_template('app.html')
 
 @app.route("/search.html")
 @requires_auth
@@ -98,60 +80,41 @@ def search():
     pw   = app.config["DATABASE_PASSWORD"]
     db   = app.config["DATABASE_DB"]
     
-    #mydb = MySQLdb.connect(host="localhost", user="root", db = "semfundc_zidisha")
-    con = MySQLdb.connect(user=user, host=host, port=port, pw = pw, db=db)
+    # Need to change this on AWS:
+    #con = MySQLdb.connect(user=user, host=host, port=port, pw = pw, db=db)
+    con = MySQLdb.connect(user=user, host=host, port=port, db=db)
     cursor = con.cursor()
 
-    loan_id = int(request.args.get("loan_id",None))
-
-    pickle.dump( loan_id, open( "passloan.pkl", "wb" ))
+    # Loan ID
+    loan_id = int(request.args.get("loan_id", None))
+    pickle.dump( loan_id, open( "passloan.pkl", "wb"))
     
-    # loan_info = sqlExec("")
-    loan_info=sqlExec("select sift_score, interest, period, applydate-borrowers.Created as time_to_complete from loanapplic join borrowers on loanapplic.borrowerid = borrowers.userid where loanid = %d;" % loan_id)
+    # Load loan info
+    loan_info = sqlExec("select sift_score, interest, period, applydate-borrowers.Created as time_to_complete from loanapplic join borrowers on loanapplic.borrowerid = borrowers.userid where loanid = %d;" % loan_id)
     
-    #posted_date_months=loan_info[0]['applydate']
+    # Sift score
+    sift_score = loan_info[0]['sift_score']
+    interest   = loan_info[0]['interest']
+    period     = str(loan_info[0]['period'])
+    time_to_complete = loan_info[0]['time_to_complete']
     
-    #image_id_str = str(loan_info[0]['image_id'])
+    # Features
+    xin = np.array([sift_score, 0.7, period, 60.0*60*24])
     
-    # change country code to continent
-    #continent_map = pickle.load( open( "continent_map.pkl", "rb" ) )
-    #continent = continent_map[loan_info[0]['location_country_code']]
-    
-    #vectorize contients and sectors
-    #(contdict,sectordict) = pickle.load( open( "contsect_dict.pkl", "rb" ) )
-    #continent_vec = contdict[continent]
-    #sector_vec = sectordict[loan_info[0]['sector']]
-    
-    #if loan_info[0]['borrowers_gender'] == 'F':
-    #    borrowers_gender = 1
-    #else:
-    #    borrowers_gender=0
-
-    #xin = np.append(continent_vec,sector_vec)
-    #xin = np.append(xin,np.array( [borrowers_gender,loan_info[0]['description_num_languages'],loan_info[0]['loan_amount'],posted_date_months,loan_info[0]['terms_repayment_term'] ] ))
-    
-    print loan_info
-    print '.....'
-    print loan_info[0]
-    
-    #xin = np.asarray(loan_info[0])
-    xin = np.array([0.52, 0.7, 12, 60.0*60*24])
-    
+    # Load model - Lin regression
     clf = pickle.load( open('app/helpers/model.pkl', "rb"))
     y = clf.predict(xin)[0]
     prob_fund = clf.predict_proba(xin)[0][1]
-    
-    loan_info = 'Lekjlejkels'
-    y = 0
-    
+
+    # Make prediction
     if y == 0:
         ypred = 'Will pay back loan in full'
     elif y ==1:
         ypred = 'Will default on loan'
 
-
-    # took out: image_id_str =image_id_str,
-    return render_template('search.html',loan_id=loan_id, loan_info=loan_info, ypred=ypred, prob_fund=prob_fund)
+    # Set image id file
+    image_id_str = "static/images/loan_images/" + str(loan_id) + ".jpg"
+    return render_template('search.html',loan_id=loan_id, loan_info=loan_info, ypred=ypred, prob_fund=prob_fund, image_id_str =image_id_str)
 
 @app.route("/eval.html")
 def eval():
