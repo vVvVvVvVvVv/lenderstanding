@@ -39,10 +39,10 @@
 
 	                    <h4>Probability of Default:
 	                    {% if y == 1 %}
-	                    <font color="red"> {{prob_default |round(0)}}% </font>
+	                    <font color="red"> {{prob_default |round(1)}}% </font>
 					    </h4>
 	                    {% else %}
-	                    <font color="green"> {{prob_default | round(0)}}% </font></h4>
+	                    <font color="green"> {{prob_default | round(1)}}% </font></h4>
 						{% endif %}
 						
 	                    <h4>Loan Prediction:

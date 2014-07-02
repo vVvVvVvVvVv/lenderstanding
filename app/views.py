@@ -113,7 +113,7 @@ def search():
     # Load model - Lin regression
     clf = pickle.load(open('app/helpers/model.pkl', "rb"))
     y = clf.predict(xin)[0]
-    prob_default = 100*clf.predict_proba(xin)[0][1]
+    prob_default = 100.0*clf.predict_proba(xin)[0][1]
     
     # Make prediction
     if y == 0:
