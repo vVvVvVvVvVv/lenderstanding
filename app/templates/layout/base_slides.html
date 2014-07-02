@@ -18,22 +18,6 @@
     <link href="static/css/main.css" rel="stylesheet">
     <!-- // <script type="text/javascript" src='static/jquery/jquery-2.0.3.min.js'></script> -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript">
-            $(document).ready(function(){
-                              
-                              //Check if the current URL contains '#'
-                              if(document.URL.indexOf("#")==-1)
-                              {
-                              // Set the URL to whatever it was plus "#".
-                              url = document.URL+"#";
-                              location = "#";
-                              
-                              //Reload the page
-                              location.reload(true);
-                              
-                              }
-                        	  });
-    </script> 
 
 
 
@@ -74,11 +58,11 @@
             <span class="icon-bar"></span>
           </button>
           <!--<a class="navbar-brand" href="#">Lenderstanding <i class="fa fa-globe"></i></a>-->
-		  <a class="navbar-brand" href="#">lenderstanding </a>
+		  <a class="navbar-brand" href="index.html">lenderstanding </a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.html">HOME</a></li>
+            <li><a href="index.html">HOME</a></li>
             <li><a href="about.html">SLIDES</a></li>
             <li><a data-toggle="modal" data-target="#myModal" href="#myModal"><i class="fa fa-envelope-o"></i></a></li>
           </ul>

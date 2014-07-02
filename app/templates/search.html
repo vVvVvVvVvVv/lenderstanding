@@ -7,8 +7,8 @@
 	<div class="container w">
         <!--<h4>Loan Application ID: {{loan_id}}</h4><br>-->
             <div class="row">
-                <div class="col-md-4">
-                    <b>Name:</b> {{loan_info[0]['first']}}<br>
+                <div class="col-md-4 well">
+                    <b>First name:</b> {{loan_info[0]['first']}}<br>
                     <b>City:</b> {{loan_info[0]['city']}}<br>
 					<b>Country:</b> {{loan_info[0]['country']}}<br>
                     <b>Sift Science Score:</b> {{loan_info[0]['sift_score']}}<br> <br>
@@ -17,7 +17,7 @@
 					<!--src="{{url_for('static', filename='test.jpg')}}"!-->
 					
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 well">
 
                     <b>Loan Application ID:</b> {{loan_id}}<br><br>
                     <b>Loan Amount (local currency):</b> {{loan_info[0]['amount']}}<br>     
@@ -35,14 +35,14 @@
 				<div>
 						
 				</div>
-                <div class="col-md-4">
+                <div class="col-md-4 well">
 
 	                    <h4>Probability of Default:
 	                    {% if ypred == "Default" %}
-	                    <font color="red"> {{prob_fund}} </font>
+	                    <font color="red"> {{prob_default}} </font>
 	                    <i class="fa fa-check"> </i></h4>
 	                    {% else %}
-	                    <font color="green"> {{prob_fund | round(2)}} </font></h4>
+	                    <font color="green"> {{prob_default | round(2)}} </font></h4>
 						{% endif %}
 						
 	                    <h4>Loan Prediction:
@@ -52,10 +52,12 @@
 	                    {% else %}
 	                    <font color="green">{{ypred}} </font></h4>
 						{% endif %}
-						
-	                    <br><b>Loan History:</b> {{loan_hist['n_prev']}} <br>
-				
+					
+					<b>Factors Considered:</b> Sift Science Score, Time to complete loan, Country, Referred by field<br>
+
                 </div>
+				
+									  
 
         </div><!--end rows  -->
 
