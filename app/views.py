@@ -106,9 +106,12 @@ def search():
     xin = np.array([sift_score, referred_by, KE, SN, other, time_to_complete])
 
     # Load model - Lin regression
-    clf = pickle.load( open('app/helpers/model.pkl', "rb"))
-    y = clf.predict(xin)[0]
-    prob_default = clf.predict_proba(xin)[0][1]
+    #clf = pickle.load( open('app/helpers/model.pkl', "rb"))
+    #y = clf.predict(xin)[0]
+    #prob_default = clf.predict_proba(xin)[0][1]
+    clf = 0
+    y = 0
+    prob_default = 0.1
     
     # Make prediction
     if y == 0:
