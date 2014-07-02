@@ -39,7 +39,7 @@ def requires_auth(f):
 
 #Change sql to 0.0.0.0
 def sqlExec(query):
-    con = MySQLdb.connect(user=user, host=host, port=port, db=db)
+    con = MySQLdb.connect(user=user, host=host, port=port, passwd=passwd, db=db)
     with con:
         cur = con.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(query)
@@ -88,7 +88,7 @@ def search():
     pickle.dump( loan_id, open( "passloan.pkl", "wb"))
 
     # Load loan info
-    loan_info = sqlExec("SELECT borrowerid, sift_score, interest, period, applydate-borrowers.Created as time_to_complete, firstname as first, reffered_by as referred_by, Country as country, City as city, Amount as amount, loanuse from loanapplic join borrowers on loanapplic.borrowerid = borrowers.userid where loanid = %d;" % loan_id)
+    loan_info = sqlExec("SELECT borrowerid, sift_score, interest, period, length(family_member1_mobile_phone) as family1, applydate-borrowers.Created as time_to_complete, length(frontNationalId) as fnid,firstname as first, reffered_by as referred_by, Country as country, City as city, Amount as amount, loanuse from loanapplic join borrowers on loanapplic.borrowerid = borrowers.userid join borrowers_extn on borrowers_extn.userid = borrowers.userid where loanid = %d;" % loan_id)
     print loan_info[0]['loanuse']
     loan_info[0]['loanuse'] = loan_info[0]['loanuse'].decode("ascii", "ignore")
 
@@ -96,32 +96,34 @@ def search():
     sift_score       = loan_info[0]['sift_score']
     interest         = loan_info[0]['interest']
     period           = loan_info[0]['period']
-    referred_by      = len(loan_info[0]['referred_by'])
+    family1          = loan_info[0]['family1']
+    fnid             = loan_info[0]['fnid']
     time_to_complete = loan_info[0]['time_to_complete']
-    KE               = (loan_info[0]['country'] == 'KE')*1
-    SN               = (loan_info[0]['country'] == 'SN')*1
-    other            = (1-KE)*(1-SN)
-
+    interest         = loan_info[0]['interest']
+    
+    # Check for null values 
+    if family1 is None:
+        family1 = 0
+    if fnid is None:
+        fnid = 0
+    
     # Features
-    xin = np.array([sift_score, referred_by, KE, SN, other, time_to_complete])
+    xin = np.array([sift_score, time_to_complete, interest, period, family1, fnid])
 
     # Load model - Lin regression
-    #clf = pickle.load( open('app/helpers/model.pkl', "rb"))
-    #y = clf.predict(xin)[0]
-    #prob_default = clf.predict_proba(xin)[0][1]
-    clf = 0
-    y = 0
-    prob_default = 0.1
+    clf = pickle.load(open('app/helpers/model.pkl', "rb"))
+    y = clf.predict(xin)[0]
+    prob_default = 100*clf.predict_proba(xin)[0][1]
     
     # Make prediction
     if y == 0:
         ypred = 'Will pay back loan in full'
     elif y ==1:
-        ypred = 'Will default on loan'
+        ypred = 'Will default'
     
     # Set image id file
     image_id_str = "static/images/loan_images/" + str(loan_id) + ".jpg"
-    return render_template('search.html', loan_id=loan_id, loan_info=loan_info, ypred=ypred, prob_default=prob_default, image_id_str =image_id_str)
+    return render_template('search.html', loan_id=loan_id, loan_info=loan_info, y=y, ypred=ypred, prob_default=prob_default, image_id_str =image_id_str)
 
 @app.route("/blocker")
 def block():

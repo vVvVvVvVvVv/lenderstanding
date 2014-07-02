@@ -20,7 +20,7 @@
                 <div class="col-md-4 well">
 
                     <b>Loan Application ID:</b> {{loan_id}}<br><br>
-                    <b>Loan Amount (local currency):</b> {{loan_info[0]['amount']}}<br>     
+                    <b>Loan Amount (local currency):</b> {{loan_info[0]['amount']}}<br>
                     <b>Interest:</b> {{loan_info[0]['interest']}}%<br>
                     <b>Period:</b> {{loan_info[0]['period']}} months<br><br>
                     <b>Referred by:</b> {{loan_info[0]['reffered_by']}}<br>
@@ -38,23 +38,28 @@
                 <div class="col-md-4 well">
 
 	                    <h4>Probability of Default:
-	                    {% if ypred == "Default" %}
-	                    <font color="red"> {{prob_default}} </font>
-	                    <i class="fa fa-check"> </i></h4>
+	                    {% if y == 1 %}
+	                    <font color="red"> {{prob_default |round(0)}}% </font>
+					    </h4>
 	                    {% else %}
-	                    <font color="green"> {{prob_default | round(2)}} </font></h4>
+	                    <font color="green"> {{prob_default | round(0)}}% </font></h4>
 						{% endif %}
 						
 	                    <h4>Loan Prediction:
-	                    {% if ypred == "Default" %}
-	                    <font color="red"> {{ypred}} </font>
-	                    <i class="fa fa-check"> </i></h4>
+	                    {% if y == 1 %}
+	                    <font color="red">{{ypred}} </font>
+					    </h4>
 	                    {% else %}
-	                    <font color="green">{{ypred}} </font></h4>
+	                    <font color="green"> <br> {{ypred}} </font></h4>
 						{% endif %}
 					
-					<b>Factors Considered:</b> Sift Science Score, Time to complete loan, Country, Referred by field<br>
-
+					<b>Factors Considered:</b><br> 
+					- Sift Science Score<br> 
+					- Interest<br> 
+					- Period<br>	
+					- Included National ID photo<br>
+					- Included Phone Nnumbers<br>
+					- Time Taken to Complete L	oan<br>
                 </div>
 				
 									  
